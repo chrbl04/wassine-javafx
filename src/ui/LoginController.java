@@ -66,17 +66,6 @@ public class LoginController {
         else img.progressProperty().addListener((o,a,b) -> { if (b.doubleValue() >= 1) cover.run(); });
 
         overlay.setMouseTransparent(true);
-        overlay.setFill(new javafx.scene.paint.LinearGradient(
-                0, 0, 0, 1,
-                true, javafx.scene.paint.CycleMethod.NO_CYCLE,
-                java.util.List.of(
-                        new javafx.scene.paint.Stop(0.00, javafx.scene.paint.Color.web("#0a2a6a", 0.70)),
-                        new javafx.scene.paint.Stop(0.35, javafx.scene.paint.Color.web("#0a2a6a", 0.30)),
-                        new javafx.scene.paint.Stop(0.55, javafx.scene.paint.Color.TRANSPARENT),
-                        new javafx.scene.paint.Stop(0.80, javafx.scene.paint.Color.web("#5a3a18", 0.35)),
-                        new javafx.scene.paint.Stop(1.00, javafx.scene.paint.Color.web("#5a3a18", 0.70))
-                )
-        ));
 
         bgImage.toBack();
         overlay.toFront();
