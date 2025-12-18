@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+
+<GridPane fx:id="root" xmlns="http://javafx.com/javafx/24"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ui.LoginController">
+
+    <!-- 55% / 45% split (closer columns) -->
+    <columnConstraints>
+        <ColumnConstraints percentWidth="50"/>
+        <ColumnConstraints percentWidth="50"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints percentHeight="100"/>
+    </rowConstraints>
+
+    <!-- ================= LEFT (55%) ================= -->
+    <StackPane fx:id="leftPane" GridPane.columnIndex="0">
+        <!-- Background -->
+        <ImageView fx:id="bgImage" preserveRatio="true" smooth="true"/>
+        <!-- Dark overlay (size bound in controller) -->
+        <Rectangle fx:id="overlay" fill="#00000055"/>
+
+        <!-- Hero -->
+        <VBox alignment="CENTER_LEFT" spacing="0" style="-fx-padding: 0 100 25 200;" styleClass="welcome-card">
+
+            <VBox alignment="CENTER_LEFT" spacing="0">
+                <Label text="Welcome" style="-fx-font-size:56px; -fx-font-weight:800; -fx-text-fill:white;"/>
+                <Label text="Back"     style="-fx-font-size:56px; -fx-font-weight:800; -fx-text-fill:white;"/>
+            </VBox>
+
+            <Label wrapText="true" maxWidth="420"
+                   text="It's a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+                   style="-fx-text-fill:white; -fx-font-size:15px; -fx-opacity:0.9;"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Button onAction="#openFacebook" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitWidth="45" fitHeight="45">
+                            <image><Image url="@/resources/images/system/social_media/facebook.png"/></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button onAction="#openInstagram" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitWidth="60" fitHeight="60">
+                            <image><Image url="@/resources/images/system/social_media/instagram.png"/></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button onAction="#openX" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitWidth="25" fitHeight="25">
+                            <image><Image url="@/resources/images/system/social_media/X.png"/></image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+            </HBox>
+        </VBox>
+    </StackPane>
+
+    <StackPane GridPane.columnIndex="1">
+        <VBox spacing="18" alignment="CENTER" maxWidth="380">
+            <padding>
+                <!-- tighten left padding to pull the form inward -->
+                <Insets top="80" left="25" right="40" bottom="40"/>
+            </padding>
+
+            <Label text="Sign in" style="-fx-font-size:30px; -fx-font-weight:800; -fx-text-fill:white;  -fx-text-fill :rgba(0,2,6,0.35)"/>
+
+
+            <VBox spacing="10" fillWidth="true">
+                <Label text="Email Address" style="-fx-text-fill: white"/>
+                <TextField fx:id="emailField" promptText="you@example.com"/>
+
+                <Label text="Password" style="-fx-text-fill: white"/>
+                <PasswordField fx:id="passwordField" promptText="••••••••"/>
+            </VBox>
+
+            <Button text="Sign in now" onAction="#onSignIn"
+                    maxWidth="Infinity"
+                    style="-fx-background-color:#ff7a24; -fx-text-fill:white; -fx-font-weight:bold; -fx-background-radius:8;"/>
+
+            <Hyperlink text="Forgot your password?" onAction="#onReset"/>
+
+            <Separator/>
+
+            <HBox alignment="CENTER" spacing="6">
+                <!-- removed forced white text so it's readable on light bg -->
+                <Label text="Don't have an account?" style="-fx-text-fill: white"/>
+                <Hyperlink text="Sign up" onAction="#onSignUp"/>
+            </HBox>
+        </VBox>
+    </StackPane>
+</GridPane>

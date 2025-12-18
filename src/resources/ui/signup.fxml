@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<GridPane fx:id="root"
+          xmlns="http://javafx.com/javafx/24"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ui.SignupController">
+
+    <columnConstraints>
+        <ColumnConstraints percentWidth="60"/>
+        <ColumnConstraints percentWidth="40"/>
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints percentHeight="100"/>
+    </rowConstraints>
+
+
+
+    <!-- LEFT -->
+    <StackPane fx:id="leftPane" GridPane.columnIndex="0">
+        <ImageView fx:id="bgImage"/>
+        <Rectangle fx:id="overlay"/>
+
+        <!-- LEFT TEXT (NO black box) -->
+        <VBox alignment="TOP_LEFT" spacing="14" maxWidth="520">
+            <padding>
+                <Insets top="130" left="60" right="40" bottom="40"/>
+            </padding>
+
+            <Label text="Welcome"
+                   style="-fx-font-size:56px; -fx-font-weight:800; -fx-text-fill:white;"/>
+
+            <Label wrapText="true" maxWidth="420"
+                   text="Create your account to start using Wassine."
+                   style="-fx-text-fill:white; -fx-font-size:15px; -fx-opacity:0.9;"/>
+
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Hyperlink onAction="#openFacebook" text="" style="-fx-padding:0;">
+                    <graphic>
+                        <ImageView fitWidth="24" fitHeight="24">
+                            <image><Image url="@/resources/images/system/social_media/facebook.png"/></image>
+                        </ImageView>
+                    </graphic>
+                </Hyperlink>
+
+                <Hyperlink onAction="#openInstagram" text="" style="-fx-padding:0;">
+                    <graphic>
+                        <ImageView fitWidth="24" fitHeight="24">
+                            <image><Image url="@/resources/images/system/social_media/instagram.png"/></image>
+                        </ImageView>
+                    </graphic>
+                </Hyperlink>
+
+                <Hyperlink onAction="#openX" text="" style="-fx-padding:0;">
+                    <graphic>
+                        <ImageView fitWidth="24" fitHeight="24">
+                            <image><Image url="@/resources/images/system/social_media/X.png"/></image>
+                        </ImageView>
+                    </graphic>
+                </Hyperlink>
+
+                <ImageView fitWidth="28" fitHeight="28">
+                    <image><Image url="@/resources/images/system/logos/Logo_blue.png"/></image>
+                </ImageView>
+            </HBox>
+        </VBox>
+    </StackPane>
+
+    <!-- RIGHT -->
+    <StackPane GridPane.columnIndex="1" style="-fx-background-color: transparent;">
+        <!-- Semi translucent form container -->
+        <VBox spacing="10" alignment="TOP_LEFT" maxWidth="390"
+              style="-fx-background-color: rgba(255,255,255,0.75); -fx-background-radius: 14;">
+            <padding>
+                <Insets top="40" left="34" right="34" bottom="24"/>
+            </padding>
+
+            <Label text="Sign up" style="-fx-font-size:30px; -fx-font-weight:800;"/>
+
+            <HBox spacing="10">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="First Name"/>
+                    <TextField fx:id="firstNameField"/>
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Last Name"/>
+                    <TextField fx:id="lastNameField"/>
+                </VBox>
+            </HBox>
+
+            <Label text="Email"/>
+            <TextField fx:id="emailField"/>
+
+            <HBox spacing="10">
+                <VBox spacing="6">
+                    <Label text="Country Code"/>
+                    <TextField fx:id="countryCodeField" prefWidth="90"/>
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Phone"/>
+                    <TextField fx:id="phoneField"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="10">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Password"/>
+                    <PasswordField fx:id="passwordField"/>
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Confirm"/>
+                    <PasswordField fx:id="confirmPasswordField"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="10">
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="Country"/>
+                    <TextField fx:id="countryField"/>
+                </VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS">
+                    <Label text="City"/>
+                    <TextField fx:id="cityField"/>
+                </VBox>
+            </HBox>
+
+            <Label text="Street"/>
+            <TextField fx:id="streetField"/>
+
+            <Label text="Building"/>
+            <TextField fx:id="buildingField"/>
+
+            <Label text="Profile Image URL (optional)"/>
+            <TextField fx:id="profileImageUrlField"/>
+
+            <Label text="ID Image URL (optional)"/>
+            <TextField fx:id="idImageUrlField"/>
+
+            <Button text="Create account" onAction="#onCreateAccount"
+                    maxWidth="Infinity"
+                    style="-fx-background-color:#ff7a2a; -fx-text-fill:white; -fx-font-weight:800; -fx-background-radius:10; -fx-padding:10 16;"/>
+
+            <HBox spacing="6" alignment="CENTER">
+                <Label text="Already have an account?"/>
+                <Hyperlink text="Sign in" onAction="#goToLogin"/>
+            </HBox>
+        </VBox>
+    </StackPane>
+
+</GridPane>

@@ -1,0 +1,38 @@
+/* ---------- Login Page Text Styles ---------- */
+.login-title {
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-font-weight: 700;
+}
+
+.hero-title {
+    -fx-text-fill: white;
+    -fx-font-size: 64px;
+    -fx-font-weight: 800;
+}
+
+.hero-subtitle {
+    -fx-text-fill: #e8e8e8;
+    -fx-font-size: 14px;
+    -fx-opacity: 0.95;
+}
+
+/* ---------- Inputs ---------- */
+.login-field {
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+.welcome-card {
+    -fx-background-color: rgba(0,0,2,0.35);
+    -fx-background-radius: 16;
+    -fx-padding: 24;
+}
+
+/* ---------- Buttons ---------- */
+.primary-btn {
+    -fx-background-color: #ff6a2a;
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-background-radius: 10;
+    -fx-padding: 10 14 10 14;
+}
