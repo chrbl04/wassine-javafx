@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/24"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ui.AccountInfoController"
+      spacing="10"
+      style="-fx-padding: 18;">
+
+    <Label text="Account Info" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="12" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints minWidth="90"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="nameLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Email:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="emailLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Phone:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label fx:id="phoneLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="User ID:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Label fx:id="idLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+    </GridPane>
+
+</VBox>

@@ -81,6 +81,10 @@ public class Service {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    private String primaryImageUrl;
+
+    public String getPrimaryImageUrl() { return primaryImageUrl; }
+    public void setPrimaryImageUrl(String primaryImageUrl) { this.primaryImageUrl = primaryImageUrl; }
 
     @Override
     public String toString() {

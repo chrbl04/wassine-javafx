@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/24"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.AddServiceController"
+           fx:id="stackRoot">
+
+    <!-- ===== Background image (blurred logo) - does NOT block clicks ===== -->
+    <ImageView fx:id="bgImage"
+               mouseTransparent="true"
+               pickOnBounds="false"
+               preserveRatio="false"
+               smooth="true">
+        <image>
+            <!-- PUT YOUR BLURRED LOGO PATH HERE -->
+            <Image url="@/resources/images/system/bgs/login_blurred.jpg"/>
+        </image>
+        <effect>
+            <GaussianBlur radius="26"/>
+        </effect>
+    </ImageView>
+
+    <!-- Dark overlay for readability (no mouse) -->
+    <Region fx:id="overlay"
+            mouseTransparent="true"
+            pickOnBounds="false"
+            maxWidth="Infinity" maxHeight="Infinity"
+            style="-fx-background-color: rgba(0,0,0,0.55);"/>
+
+    <!-- ===== Card ===== -->
+    <BorderPane maxWidth="820"
+                style="-fx-background-color: rgba(255,255,255,0.10);
+                       -fx-background-radius: 18;
+                       -fx-padding: 18;">
+
+        <!-- Top: title + small logo -->
+        <top>
+            <HBox spacing="12" alignment="CENTER_LEFT"
+                  style="-fx-padding: 6 6 14 6;">
+                <ImageView fitWidth="80" fitHeight="80" preserveRatio="true" mouseTransparent="true">
+                    <image>
+                        <Image url="@/resources/images/system/logos/logo_grey.png"/>
+                    </image>
+                </ImageView>
+
+                <VBox spacing="2">
+                    <Label text="Add a Service"
+                           style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                    <Label text="Fill in the details below"
+                           style="-fx-text-fill: rgba(255,255,255,0.75);"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+            </HBox>
+        </top>
+
+        <!-- Center: form -->
+        <center>
+            <VBox spacing="14">
+
+                <!-- row 1 -->
+                <HBox spacing="14">
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <Label text="Title" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <TextField fx:id="titleField" promptText="e.g., Deliver documents to Beirut"
+                                   style="-fx-background-radius: 10; -fx-padding: 10;"/>
+                    </VBox>
+
+                    <VBox spacing="6" prefWidth="220">
+                        <Label text="Category" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <ComboBox fx:id="categoryCombo" promptText="Select..."
+                                  style="-fx-background-radius: 10;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- row 2 -->
+                <HBox spacing="14">
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <Label text="Pickup Address" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <TextField fx:id="pickupField" promptText="e.g., Tripoli, Mina Street"
+                                   style="-fx-background-radius: 10; -fx-padding: 10;"/>
+                    </VBox>
+
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <Label text="Dropoff Address" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <TextField fx:id="dropoffField" promptText="e.g., Beirut, Hamra"
+                                   style="-fx-background-radius: 10; -fx-padding: 10;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- row 3 -->
+                <HBox spacing="14">
+                    <VBox spacing="6" prefWidth="190">
+                        <Label text="Weight (kg)" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <TextField fx:id="weightField" promptText="e.g., 2.5"
+                                   style="-fx-background-radius: 10; -fx-padding: 10;"/>
+                    </VBox>
+
+                    <VBox spacing="6" prefWidth="190">
+                        <Label text="Offer Price" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <TextField fx:id="priceField" promptText="e.g., 15.00"
+                                   style="-fx-background-radius: 10; -fx-padding: 10;"/>
+                    </VBox>
+
+                    <VBox spacing="6" HBox.hgrow="ALWAYS">
+                        <Label text="Expected Delivery Deadline" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                        <DatePicker fx:id="deadlinePicker" style="-fx-background-radius: 10;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- row 4 -->
+                <VBox spacing="6">
+                    <Label text="Description" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                    <TextArea fx:id="descriptionArea" promptText="Describe what needs to be delivered..."
+                              prefRowCount="4"
+                              style="-fx-background-radius: 10; -fx-padding: 10;"/>
+                </VBox>
+
+                <!-- status / error label -->
+                <Label fx:id="statusLabel"
+                       text=""
+                       wrapText="true"
+                       style="-fx-text-fill: #ffb3b3; -fx-font-weight: bold;"/>
+
+            </VBox>
+        </center>
+
+        <!-- Bottom: actions -->
+        <bottom>
+            <HBox spacing="10" alignment="CENTER_RIGHT"
+                  style="-fx-padding: 16 6 6 6;">
+                <Button text="Cancel" onAction="#onCancel"
+                        style="-fx-background-radius: 10; -fx-padding: 10 14;"/>
+                <Button text="Create Service" onAction="#onCreate"
+                        style="-fx-background-radius: 10;
+                               -fx-padding: 10 14;
+                               -fx-background-color: #4CAF50;
+                               -fx-text-fill: white;
+                               -fx-font-weight: bold;"/>
+            </HBox>
+        </bottom>
+
+    </BorderPane>
+
+</StackPane>

@@ -5,67 +5,206 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/24"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ui.HomeController"
-            fx:id="root">
+<!--
+    FXML rebuilt from scratch with ONE goal:
+    - NOTHING blocks clicks except the actual controls.
+    - Background + overlay are mouseTransparent.
+    - Floating buttons container does NOT eat clicks (pickOnBounds=false).
+-->
 
-    <!-- TOP BAR -->
-    <top>
-        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 14; -fx-background-color: rgba(255,255,255,0.08);">
-            <TextField fx:id="searchField"
-                       promptText="Search services..."
-                       HBox.hgrow="ALWAYS"
-                       style="-fx-background-radius: 10; -fx-padding: 10 12;"/>
+<StackPane fx:id="stackRoot"
+           xmlns="http://javafx.com/javafx/24"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ui.HomeController">
 
-            <ComboBox fx:id="sortCombo" prefWidth="200" />
+    <!-- ================= LAYER 0: BACKGROUND (NO MOUSE) ================= -->
+    <ImageView fx:id="bgImage"
+               preserveRatio="false"
+               smooth="true"
+               mouseTransparent="true"
+               pickOnBounds="false">
+        <image>
+            <!-- change path if needed -->
+            <Image url="@/resources/images/system/bgs/login_bg.jpg"/>
+        </image>
+    </ImageView>
 
-            <!-- Filters dropdown -->
-            <MenuButton fx:id="filtersBtn" text="Filters" />
+    <!-- ================= LAYER 1: OVERLAY (NO MOUSE) ================= -->
+    <Region fx:id="overlay"
+            mouseTransparent="true"
+            pickOnBounds="false"
+            maxWidth="Infinity" maxHeight="Infinity"
+            style="-fx-background-color: rgba(0,0,0,0.45);"/>
 
-            <Region HBox.hgrow="ALWAYS"/>
+    <!-- ================= LAYER 2: MAIN UI (CLICKABLE) ================= -->
+    <!-- Put UI inside a container so we can center it and keep clean z-order -->
+    <StackPane alignment="CENTER">
 
-            <!-- Account dropdown (icon) -->
-            <MenuButton fx:id="accountBtn" style="-fx-background-color: transparent;">
+        <BorderPane fx:id="root"
+                    prefWidth="1200" prefHeight="800"
+                    maxWidth="1200" maxHeight="800"
+                    style="-fx-background-color: rgba(255,255,255,0.08);
+                           -fx-background-radius: 18;
+                           -fx-padding: 16;">
+
+            <!-- ===== TOP BAR ===== -->
+            <top>
+                <HBox spacing="12" alignment="CENTER_LEFT"
+                      BorderPane.alignment="CENTER"
+                      style="-fx-padding: 14;
+                             -fx-background-color: rgba(255,255,255,0.08);
+                             -fx-background-radius: 14;">
+
+                    <TextField fx:id="searchField"
+                               promptText="Search services..."
+                               HBox.hgrow="ALWAYS"
+                               style="-fx-background-radius: 10;
+                                      -fx-padding: 10 12;" />
+
+                    <ComboBox fx:id="sortCombo" prefWidth="240"/>
+
+                    <!-- FILTERS (CLICKABLE) -->
+                    <MenuButton fx:id="filtersBtn" text="Filters">
+                        <items>
+                            <CustomMenuItem hideOnClick="false">
+                                <content>
+                                    <VBox spacing="10" style="-fx-padding: 12; -fx-min-width: 320;">
+
+                                        <Label text="Price Range"/>
+                                        <HBox spacing="8">
+                                            <TextField fx:id="priceMinField" promptText="Min" prefWidth="150"/>
+                                            <TextField fx:id="priceMaxField" promptText="Max" prefWidth="150"/>
+                                        </HBox>
+
+                                        <Separator/>
+
+                                        <Label text="Destination"/>
+                                        <TextField fx:id="destinationField" promptText="Destination city/address"/>
+
+                                        <Label text="Origin"/>
+                                        <TextField fx:id="originField" promptText="Origin city/address"/>
+
+                                        <Separator/>
+
+                                        <Label text="Date Posted"/>
+                                        <HBox spacing="8">
+                                            <DatePicker fx:id="postedFromPicker" prefWidth="150"/>
+                                            <DatePicker fx:id="postedToPicker" prefWidth="150"/>
+                                        </HBox>
+
+                                        <Label text="Expected Delivery"/>
+                                        <HBox spacing="8">
+                                            <DatePicker fx:id="expectedFromPicker" prefWidth="150"/>
+                                            <DatePicker fx:id="expectedToPicker" prefWidth="150"/>
+                                        </HBox>
+
+                                        <HBox spacing="8" alignment="CENTER_RIGHT">
+                                            <Button fx:id="clearFiltersBtn" text="Clear"/>
+                                            <Button fx:id="applyFiltersBtn" text="Apply"/>
+                                        </HBox>
+
+                                    </VBox>
+                                </content>
+                            </CustomMenuItem>
+                        </items>
+                    </MenuButton>
+
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <!-- ACCOUNT MENU (CLICKABLE) -->
+                    <MenuButton fx:id="accountBtn" style="-fx-background-color: transparent;">
+                        <graphic>
+                            <!-- graphic is mouseTransparent so clicks go to the MenuButton -->
+                            <ImageView fitWidth="28" fitHeight="28" preserveRatio="true"
+                                       mouseTransparent="true" pickOnBounds="false">
+                                <image>
+                                    <Image url="@/resources/images/system/icons/account.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+
+                        <items>
+                            <MenuItem fx:id="accountInfoItem" text="Account Info"/>
+                            <MenuItem fx:id="editAccountItem" text="Edit"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem fx:id="signOutItem" text="Sign Out"/>
+                        </items>
+                    </MenuButton>
+
+                </HBox>
+            </top>
+
+            <!-- ===== CENTER ===== -->
+            <center>
+                <VBox spacing="12" style="-fx-padding: 14;">
+
+                    <!-- Categories -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <ToggleButton fx:id="catAll" text="All" selected="true"/>
+                        <ToggleButton fx:id="catDocuments" text="Documents"/>
+                        <ToggleButton fx:id="catElectronics" text="Electronics"/>
+                        <ToggleButton fx:id="catClothes" text="Clothes"/>
+                        <ToggleButton fx:id="catOthers" text="Others"/>
+                    </HBox>
+
+                    <!-- Table: use built-in scrolling -->
+                    <TableView fx:id="servicesTable" VBox.vgrow="ALWAYS"
+                               style="-fx-background-radius: 12;">
+                        <columns>
+                            <TableColumn fx:id="colTitle" text="Title" prefWidth="220"/>
+                            <TableColumn fx:id="colRoute" text="Route" prefWidth="300"/>
+                            <TableColumn fx:id="colCategory" text="Category" prefWidth="130"/>
+                            <TableColumn fx:id="colWeight" text="Weight (kg)" prefWidth="120"/>
+                            <TableColumn fx:id="colPrice" text="Offer Price" prefWidth="130"/>
+                            <TableColumn fx:id="colArrival" text="Expected" prefWidth="170"/>
+                            <TableColumn fx:id="colPosted" text="Posted" prefWidth="150"/>
+                        </columns>
+                    </TableView>
+
+                </VBox>
+            </center>
+
+        </BorderPane>
+    </StackPane>
+
+    <!-- ================= LAYER 3: FLOATING BUTTONS (CLICKABLE ONLY ON BUTTONS) ================= -->
+    <!-- IMPORTANT: pickOnBounds=false so this layer does NOT block top bar clicks -->
+    <StackPane fx:id="floatingPane"
+               StackPane.alignment="BOTTOM_RIGHT"
+               pickOnBounds="false"
+               style="-fx-padding: 24;">
+
+        <HBox spacing="14" alignment="BOTTOM_RIGHT" pickOnBounds="false">
+
+            <Button fx:id="addServiceBtn" onAction="#onAddService"
+                    style="-fx-background-radius: 50;
+                           -fx-background-color: #4CAF50;
+                           -fx-padding: 14;">
                 <graphic>
-                    <ImageView fitWidth="28" fitHeight="28" preserveRatio="true">
+                    <ImageView fitWidth="24" fitHeight="24"
+                               mouseTransparent="true" pickOnBounds="false">
                         <image>
-                            <Image url="@/resources/images/system/icons/account.png"/>
+                            <Image url="@/resources/images/system/icons/plus.png"/>
                         </image>
                     </ImageView>
                 </graphic>
-            </MenuButton>
+            </Button>
+
+            <Button fx:id="messagesBtn" onAction="#onMessages"
+                    style="-fx-background-radius: 50;
+                           -fx-background-color: #FF9800;
+                           -fx-padding: 14;">
+                <graphic>
+                    <ImageView fitWidth="24" fitHeight="24"
+                               mouseTransparent="true" pickOnBounds="false">
+                        <image>
+                            <Image url="@/resources/images/system/icons/Chat.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
         </HBox>
-    </top>
+    </StackPane>
 
-    <!-- CENTER -->
-    <center>
-        <VBox spacing="12" style="-fx-padding: 14;">
-            <!-- Categories -->
-            <HBox spacing="10" alignment="CENTER_LEFT">
-                <ToggleButton fx:id="catAll" text="All" selected="true" />
-                <ToggleButton fx:id="catDocuments" text="Documents" />
-                <ToggleButton fx:id="catElectronics" text="Electronics" />
-                <ToggleButton fx:id="catClothes" text="Clothes" />
-                <ToggleButton fx:id="catOthers" text="Others" />
-            </HBox>
-
-            <!-- Table -->
-            <TableView fx:id="servicesTable" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="colImage" text="" prefWidth="90"/>
-                    <TableColumn fx:id="colTitle" text="Title" prefWidth="220"/>
-                    <TableColumn fx:id="colRoute" text="Route" prefWidth="260"/>
-                    <TableColumn fx:id="colCategory" text="Category" prefWidth="120"/>
-                    <TableColumn fx:id="colWeight" text="Weight (kg)" prefWidth="110"/>
-                    <TableColumn fx:id="colPrice" text="Offer Price" prefWidth="120"/>
-                    <TableColumn fx:id="colArrival" text="Delivery Deadline" prefWidth="160"/>
-                    <TableColumn fx:id="colPosted" text="Posted" prefWidth="140"/>
-                </columns>
-            </TableView>
-
-        </VBox>
-    </center>
-
-</BorderPane>
+</StackPane>
