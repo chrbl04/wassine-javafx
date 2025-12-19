@@ -29,6 +29,8 @@
         <!-- Hero -->
         <VBox alignment="CENTER_LEFT" spacing="0" style="-fx-padding: 0 100 25 200;" styleClass="welcome-card">
 
+
+
             <VBox alignment="CENTER_LEFT" spacing="0">
                 <Label text="Welcome" style="-fx-font-size:56px; -fx-font-weight:800; -fx-text-fill:white;"/>
                 <Label text="Back"     style="-fx-font-size:56px; -fx-font-weight:800; -fx-text-fill:white;"/>
@@ -36,7 +38,7 @@
 
             <Label wrapText="true" maxWidth="420"
                    text="It's a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
-                   style="-fx-text-fill:white; -fx-font-size:15px; -fx-opacity:0.9;"/>
+                   style="-fx-text-fill:white; -fx-font-size:15px; "/>
 
             <HBox spacing="12" alignment="CENTER_LEFT">
                 <Button onAction="#openFacebook" style="-fx-background-color: transparent;">

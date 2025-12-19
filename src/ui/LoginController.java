@@ -66,34 +66,52 @@ public class LoginController {
         else img.progressProperty().addListener((o,a,b) -> { if (b.doubleValue() >= 1) cover.run(); });
 
         overlay.setMouseTransparent(true);
+        overlay.setFill(new javafx.scene.paint.LinearGradient(
+                0, 0, 0, 1,
+                true, javafx.scene.paint.CycleMethod.NO_CYCLE,
+                java.util.List.of(
+                        new javafx.scene.paint.Stop(0.00, javafx.scene.paint.Color.web("#0a2a6a", 0.70)),
+                        new javafx.scene.paint.Stop(0.35, javafx.scene.paint.Color.web("#0a2a6a", 0.30)),
+                        new javafx.scene.paint.Stop(0.55, javafx.scene.paint.Color.TRANSPARENT),
+                        new javafx.scene.paint.Stop(0.80, javafx.scene.paint.Color.web("#5a3a18", 0.35)),
+                        new javafx.scene.paint.Stop(1.00, javafx.scene.paint.Color.web("#5a3a18", 0.70))
+                )
+        ));
 
         bgImage.toBack();
         overlay.toFront();
+
     }
 
     // ===================== LOGIN (DB CHECK) =====================
     @FXML
     private void onSignIn() {
         String email = emailField.getText().trim();
-        String pass  = passwordField.getText(); // for now assumes DB stores plain pass in password_hash
+        String pass  = passwordField.getText();
 
         if (email.isEmpty() || pass.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Please enter email and password.");
             return;
         }
 
-        boolean ok = checkUser(email, pass);
+        model.User user = checkUser(email, pass);
 
-        if (ok) {
-            showAlert(Alert.AlertType.INFORMATION, "✅ Successful login!");
-            // TODO: navigate to Home scene
+        if (user != null) {
+            util.Session.setCurrentUser(user);     // 🔐 store logged user
+            util.SceneLoader.load("/resources/ui/Home.fxml"); // 🚀 open home
         } else {
             showAlert(Alert.AlertType.ERROR, "❌ Invalid email or password.");
         }
     }
 
-    private boolean checkUser(String email, String passwordHashValue) {
-        String sql = "SELECT user_id FROM users WHERE email = ? AND password_hash = ? LIMIT 1";
+
+    private model.User checkUser(String email, String passwordHashValue) {
+        String sql = """
+        SELECT *
+        FROM users
+        WHERE email = ? AND password_hash = ?
+        LIMIT 1
+    """;
 
         try (Connection c = Database.getConnection();
              PreparedStatement ps = c.prepareStatement(sql)) {
@@ -102,14 +120,23 @@ public class LoginController {
             ps.setString(2, passwordHashValue);
 
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
+                if (rs.next()) {
+                    model.User u = new model.User();
+                    u.setUserId(rs.getInt("user_id"));
+                    u.setFirstName(rs.getString("first_name"));
+                    u.setLastName(rs.getString("last_name"));
+                    u.setEmail(rs.getString("email"));
+                    // add more setters if needed
+                    return u;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Database error:\n" + e.getMessage());
-            return false;
         }
+        return null;
     }
+
 
     @FXML
     private void onSignUp() {

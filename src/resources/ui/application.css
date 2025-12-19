@@ -27,6 +27,12 @@
     -fx-background-radius: 16;
     -fx-padding: 24;
 }
+.welcome-card {
+    -fx-background-color: rgba(0, 0, 0, 0.18);
+    -fx-background-radius: 20;
+    -fx-padding: 28;
+}
+
 
 /* ---------- Buttons ---------- */
 .primary-btn {

@@ -16,8 +16,14 @@ public class Session {
     public static int getCurrentUserId() {
         return currentUser == null ? -1 : currentUser.getUserId();
     }
+    public static void clear() {
+        currentUser = null;
+    }
 
     public static void logout() {
         currentUser = null;
+    }
+    public static void setCurrentUser(User user) {
+        currentUser = user;
     }
 }

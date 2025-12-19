@@ -3,45 +3,46 @@ package util;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
-import java.util.Objects;
-
-public final class SceneLoader {
+public class SceneLoader {
 
     private static Stage stage;
-
-    private SceneLoader() {}
 
     public static void init(Stage primaryStage) {
         stage = primaryStage;
     }
 
     public static void load(String fxmlPath) {
-        if (stage == null) throw new IllegalStateException("SceneLoader not initialized. Call SceneLoader.init(stage) in App.start().");
-
         try {
-            double w = stage.getScene() != null ? stage.getScene().getWidth() : 1200;
-            double h = stage.getScene() != null ? stage.getScene().getHeight() : 700;
+            if (stage == null) throw new IllegalStateException("SceneLoader.init(stage) was not called");
 
-            Parent root = FXMLLoader.load(Objects.requireNonNull(
-                    SceneLoader.class.getResource(fxmlPath),
-                    "FXML not found: " + fxmlPath
-            ));
+            FXMLLoader loader = new FXMLLoader(SceneLoader.class.getResource(fxmlPath));
+            Parent root = loader.load();
 
-            Scene scene = new Scene(root, w, h);
+            Scene scene = stage.getScene();
+            if (scene == null) {
+                scene = new Scene(root, 1200, 700);
+            } else {
+                scene.setRoot(root);
+            }
 
-            scene.getStylesheets().add(Objects.requireNonNull(
-                    SceneLoader.class.getResource("/resources/ui/application.css"),
-                    "CSS not found: /resources/ui/application.css"
-            ).toExternalForm());
+            // keep same stylesheet always
+            var css = SceneLoader.class.getResource("/resources/ui/application.css");
+            if (css != null && scene.getStylesheets().isEmpty()) {
+                scene.getStylesheets().add(css.toExternalForm());
+            }
 
             stage.setScene(scene);
-            stage.setWidth(w);
-            stage.setHeight(h);
+            stage.show();
 
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load scene: " + fxmlPath, e);
+            e.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.ERROR,
+                    "Failed to load: " + fxmlPath + "\n\n" + e.getClass().getSimpleName() + ": " + e.getMessage());
+            a.setHeaderText("Scene Load Error");
+            a.showAndWait();
         }
     }
 }
